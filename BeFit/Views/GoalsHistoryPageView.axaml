@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BeFit.ViewModels;assembly=BeFit"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BeFit.Views.GoalsHistoryPageView"
+             x:DataType="vm:GoalsHistoryPageViewModel">
+
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom"
+            Content="Back"
+            Command="{Binding BackCommand}"/>
+    
+    <ItemsControl ItemsSource="{Binding Days}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+
+      <ItemsControl.ItemTemplate>
+        <DataTemplate DataType="vm:OneDayGoalsViewModel">
+          <Button Content="{Binding DayName}"
+                  Command="{Binding ShowCommand}"/>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </DockPanel>
+  
+</UserControl>

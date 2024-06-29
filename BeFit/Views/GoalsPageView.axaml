@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BeFit.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BeFit.Views.GoalsPageView"
+             x:DataType="vm:GoalsPageViewModel">
+
+  <DockPanel>
+    <Grid DockPanel.Dock="Bottom"
+          ColumnDefinitions="*, *">
+      <Button Grid.Column="0"
+              Content="Back"
+              Command="{Binding BackCommand}"/>
+
+      <Button Grid.Column="1"
+              Content="Done"
+              Command="{Binding DoneCommand}"/>
+    </Grid>
+    
+    <ItemsControl ItemsSource="{Binding Today.Goals}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      
+      <ItemsControl.ItemTemplate>
+        <DataTemplate DataType="vm:DoneActionViewModel">
+          <CheckBox IsChecked="{Binding Done, Mode=TwoWay}"
+                    Content="{Binding Description}"/>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </DockPanel>
+  
+</UserControl>
