@@ -26,6 +26,10 @@
       <v:GoalsHistoryPageView/>
     </DataTemplate>
 
+    <DataTemplate DataType="vm:GoalsEditorPageViewModel">
+      <v:GoalsEditorPageView/>
+    </DataTemplate>
+    
     <DataTemplate DataType="vm:TrendsViewModel">
       <v:TrendsPageView/>
     </DataTemplate>

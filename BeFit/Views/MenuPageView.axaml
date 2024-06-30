@@ -12,7 +12,7 @@
             Command="{Binding ViewHistoryCommand}"/>
     
     <Button Content="Edit goals"
-            Command="{Binding ViewTrendsCommand}"/>
+            Command="{Binding EditGoalsCommand}"/>
     
     <Button Content="View trends"
             Command="{Binding ViewTrendsCommand}"/>

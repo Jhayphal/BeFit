@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:BeFit.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="BeFit.Views.GoalsEditorPageView"
+             x:DataType="vm:GoalsEditorPageViewModel">
+
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom"
+            Content="Back"
+            Command="{Binding BackCommand}"/>
+
+    <ScrollViewer>
+      <ItemsControl ItemsSource="{Binding Goals}"
+                    VerticalAlignment="Top">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:GoalViewModel">
+            <Expander Header="{Binding Description}"
+                      HorizontalAlignment="Stretch">
+              <StackPanel>
+                <TextBox Text="{Binding Description}"/>
+
+                <ItemsControl ItemsSource="{Binding Schedule}"
+                              HorizontalAlignment="Center">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:DayOfWeekViewModel">
+                      <CheckBox IsChecked="{Binding Active}"
+                                Content="{Binding Caption}"
+                                ToolTip.Tip="{Binding DayOfWeek}"/>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </Expander>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+
+</UserControl>

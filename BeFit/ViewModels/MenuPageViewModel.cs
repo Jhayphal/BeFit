@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+
+using BeFit.Models;
+
 using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels;
@@ -47,6 +50,13 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     [RelayCommand]
     private void EditGoals()
     {
+        var goals = history.Days
+            .SelectMany(x => x.Goals)
+            .Select((g, i) => new Goal(i, g.Description, g.Schedule))
+            .GroupBy(x => x.Description)
+            .Select(x => x.First());
+
+        owner.Navigate(new GoalsEditorPageViewModel(owner, goals));
     }
 
     [RelayCommand]

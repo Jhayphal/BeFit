@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using BeFit.Models;
 using BeFit.ViewModels;
 
 namespace BeFit;

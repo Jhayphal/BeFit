@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-
+using BeFit.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BeFit.ViewModels;
-
-public sealed record class Schedule(int Id, IEnumerable<DayOfWeek> Days);
-
-public record struct Goal(int Id, string Description, Schedule Schedule);
 
 public sealed partial class DoneActionViewModel(Goal goal) : ViewModelBase
 {

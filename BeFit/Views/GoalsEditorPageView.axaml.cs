@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace BeFit.Views;
 
-public partial class TrendsPageView : UserControl
+public partial class GoalsEditorPageView : UserControl
 {
-    public TrendsPageView()
+    public GoalsEditorPageView()
     {
         InitializeComponent();
     }
