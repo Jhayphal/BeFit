@@ -12,7 +12,7 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     private readonly MainViewModel owner = owner;
     private readonly GoalsHistoryPageViewModel history = TestDataProvider.CreateHistory(
         owner,
-        new DateTime(2024, 01, 01));
+        new DateTime(2024, 06, 01));
 
     [RelayCommand]
     private void ViewHistory()

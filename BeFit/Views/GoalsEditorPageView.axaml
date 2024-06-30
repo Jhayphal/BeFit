@@ -10,9 +10,16 @@
              x:DataType="vm:GoalsEditorPageViewModel">
 
   <DockPanel>
-    <Button DockPanel.Dock="Bottom"
-            Content="Back"
-            Command="{Binding BackCommand}"/>
+    <Grid DockPanel.Dock="Bottom"
+          ColumnDefinitions="*, *">
+      <Button Grid.Column="0"
+              Content="Back"
+              Command="{Binding BackCommand}"/>
+
+      <Button Grid.Column="1"
+              Content="Save"
+              Command="{Binding SaveCommand}"/>
+    </Grid>
 
     <ScrollViewer>
       <ItemsControl ItemsSource="{Binding Goals}"
