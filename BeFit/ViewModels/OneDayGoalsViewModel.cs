@@ -17,6 +17,8 @@ public partial class OneDayGoalsViewModel(MainViewModel owner) : ViewModelBase
 
     public string DayName { get; private set; } = string.Empty;
 
+    public double Progress => Goals.Count(g => g.Done) / (double)Goals.Count * 100d;
+
     public void Load()
     {
         Day = Goals

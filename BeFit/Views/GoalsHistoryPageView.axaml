@@ -22,8 +22,15 @@
 
         <ItemsControl.ItemTemplate>
           <DataTemplate DataType="vm:OneDayGoalsViewModel">
-            <Button Content="{Binding DayName}"
-                    Command="{Binding ShowCommand}"/>
+            <Button Command="{Binding ShowCommand}">
+              <StackPanel>
+                <TextBlock Text="{Binding DayName}"
+                           HorizontalAlignment="Center"/>
+                <ProgressBar Minimum="0"
+                             Maximum="100"
+                             Value="{Binding Progress}"/>
+              </StackPanel>
+            </Button>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
