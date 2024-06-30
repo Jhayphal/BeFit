@@ -29,13 +29,16 @@
     <DataTemplate DataType="vm:GoalsEditorPageViewModel">
       <v:GoalsEditorPageView/>
     </DataTemplate>
-    
+
     <DataTemplate DataType="vm:TrendsViewModel">
       <v:TrendsPageView/>
     </DataTemplate>
   </UserControl.DataTemplates>
-  
-  <ContentControl Content="{Binding Page}"
-                  Margin="5"/>
-  
+
+  <TransitioningContentControl Content="{Binding Page}">
+    <TransitioningContentControl.PageTransition>
+      <CrossFade Duration="0:00:00.200"/>
+    </TransitioningContentControl.PageTransition>
+  </TransitioningContentControl>
+
 </UserControl>
