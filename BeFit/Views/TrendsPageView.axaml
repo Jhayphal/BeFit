@@ -8,6 +8,14 @@
              x:Class="BeFit.Views.TrendsPageView"
              x:DataType="vm:TrendsViewModel">
 
-  <lvc:CartesianChart Series="{Binding Series}"/>
-
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom"
+            Command="{Binding BackCommand}">Back</Button>
+    
+    <lvc:CartesianChart Series="{Binding Series}"
+                        XAxes="{Binding XAxes}"
+                        YAxes="{Binding YAxes}"
+                        ZoomMode="X"/>
+  </DockPanel>
+  
 </UserControl>
