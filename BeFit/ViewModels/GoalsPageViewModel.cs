@@ -13,5 +13,6 @@ public partial class GoalsPageViewModel(MainViewModel owner) : ViewModelBase
         => owner.NavigateBackward();
 
     [RelayCommand]
-    private void Done() => throw new System.NotImplementedException();
+    private void Done()
+        => Back();
 }

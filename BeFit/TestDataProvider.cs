@@ -15,13 +15,21 @@ internal static class TestDataProvider
         "Читать книгу",
         "Выключить компьютер до 22:00"];
 
-    public static IEnumerable<DoneActionViewModel> GetGoals(DateTime date) => goalNames.Select(g => new DoneActionViewModel(g)
-    {
-        Done = Random.Shared.Next(1000) < 250,
-        When = date
-    });
+    public static IEnumerable<DayOfWeek> GetDays()
+        => Enumerable
+            .Range(0, Random.Shared.Next(7))
+            .Select(x => (DayOfWeek)Random.Shared.Next(7))
+            .Distinct();
 
-    public static OneDayGoalsViewModel CreateDayGoals(MainViewModel owner, DateTime date)
+    public static IEnumerable<DoneActionViewModel> GetGoals(DateTime date) => goalNames
+        .Select((g, i) => new DoneActionViewModel(new Goal(i, g, new Schedule(i, GetDays())))
+    {
+        Done = Random.Shared.Next(1000) < 500,
+        When = date
+    })
+        .Where(a => a.Schedule.Days.Contains(a.When!.Value.DayOfWeek));
+
+    public static OneDayGoalsViewModel? CreateDayGoals(MainViewModel owner, DateTime date)
     {
         var result = new OneDayGoalsViewModel(owner);
 
@@ -30,7 +38,12 @@ internal static class TestDataProvider
             result.Goals.Add(goal);
         }
 
-        result.SetDay();
+        if (result.Goals.Count == 0)
+        {
+            return null;
+        }
+
+        result.Load();
 
         return result;
     }
@@ -44,7 +57,11 @@ internal static class TestDataProvider
 
         while ((currentDay - targetDay).TotalDays >= 0)
         {
-            days.Add(CreateDayGoals(owner, currentDay));
+            var day = CreateDayGoals(owner, currentDay);
+            if (day is not null)
+            {
+                days.Add(day);
+            }
 
             currentDay = currentDay.AddDays(-1);
         }

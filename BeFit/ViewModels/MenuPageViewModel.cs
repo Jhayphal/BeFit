@@ -9,7 +9,7 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     private readonly MainViewModel owner = owner;
     private readonly GoalsHistoryPageViewModel history = TestDataProvider.CreateHistory(
         owner,
-        new DateTime(2024, 06, 24));
+        new DateTime(2024, 06, 01));
 
     [RelayCommand]
     private void ViewHistory()
@@ -20,7 +20,7 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     [RelayCommand]
     private void UpdateTodayAchievements()
     {
-        OneDayGoalsViewModel target;
+        OneDayGoalsViewModel? target;
         
         var today = DateTime.Now.Date;
         var latestDay = history.Days
@@ -30,6 +30,7 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
         if (latestDay is null || latestDay.Day.Date != today)
         {
             target = TestDataProvider.CreateDayGoals(owner, today);
+            target ??= new OneDayGoalsViewModel(owner);
             history.Days.Add(target);
         }
         else
@@ -46,12 +47,10 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     [RelayCommand]
     private void EditGoals()
     {
-        throw new NotImplementedException();
     }
 
     [RelayCommand]
     private void ViewTrends()
     {
-        throw new NotImplementedException();
     }
 }

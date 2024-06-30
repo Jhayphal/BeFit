@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 using CommunityToolkit.Mvvm.Input;
@@ -16,7 +17,7 @@ public partial class OneDayGoalsViewModel(MainViewModel owner) : ViewModelBase
 
     public string DayName { get; private set; } = string.Empty;
 
-    public void SetDay()
+    public void Load()
     {
         Day = Goals
             .Where(g => g.When.HasValue)
@@ -28,9 +29,9 @@ public partial class OneDayGoalsViewModel(MainViewModel owner) : ViewModelBase
 
     private static string GetDayName(DateTime day) => (DateTime.Today.Date - day).TotalDays switch
     {
-        0 => $"Today, {day:dd MMM}",
-        1 => $"Yesterday, {day:dd MMM}",
-        _ => $"{day.DayOfWeek}, {day:dd MMM}",
+        0 => $"Today, {day.ToString("dd MMM", CultureInfo.InvariantCulture)}",
+        1 => $"Yesterday, {day.ToString("dd MMM", CultureInfo.InvariantCulture)}",
+        _ => $"{day.DayOfWeek}, {day.ToString("dd MMM", CultureInfo.InvariantCulture)}",
     };
 
     [RelayCommand]

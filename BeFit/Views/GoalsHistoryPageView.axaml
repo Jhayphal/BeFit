@@ -11,21 +11,23 @@
     <Button DockPanel.Dock="Bottom"
             Content="Back"
             Command="{Binding BackCommand}"/>
-    
-    <ItemsControl ItemsSource="{Binding Days}">
-      <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <StackPanel/>
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
 
-      <ItemsControl.ItemTemplate>
-        <DataTemplate DataType="vm:OneDayGoalsViewModel">
-          <Button Content="{Binding DayName}"
-                  Command="{Binding ShowCommand}"/>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <ScrollViewer>
+      <ItemsControl ItemsSource="{Binding Days}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:OneDayGoalsViewModel">
+            <Button Content="{Binding DayName}"
+                    Command="{Binding ShowCommand}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
   </DockPanel>
   
 </UserControl>

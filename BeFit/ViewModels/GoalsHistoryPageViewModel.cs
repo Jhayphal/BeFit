@@ -10,7 +10,7 @@ public partial class GoalsHistoryPageViewModel(MainViewModel owner, IEnumerable<
 {
     private readonly MainViewModel owner = owner;
 
-    public ObservableCollection<OneDayGoalsViewModel> Days { get; } = new(days.OrderBy(d => d.Day));
+    public ObservableCollection<OneDayGoalsViewModel> Days { get; } = new(days.OrderByDescending(d => d.Day));
 
     [RelayCommand]
     private void Back()
