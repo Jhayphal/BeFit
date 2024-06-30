@@ -25,6 +25,10 @@
     <DataTemplate DataType="vm:GoalsHistoryPageViewModel">
       <v:GoalsHistoryPageView/>
     </DataTemplate>
+
+    <DataTemplate DataType="vm:TrendsViewModel">
+      <v:TrendsPageView/>
+    </DataTemplate>
   </UserControl.DataTemplates>
   
   <ContentControl Content="{Binding Page}"

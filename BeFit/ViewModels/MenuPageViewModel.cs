@@ -52,5 +52,6 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
     [RelayCommand]
     private void ViewTrends()
     {
+        owner.Navigate(new TrendsViewModel(history.Days));
     }
 }
