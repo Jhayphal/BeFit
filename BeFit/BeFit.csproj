@@ -25,4 +25,8 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\GoalsHistoryPageView.axaml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\GoalEditorPageView.axaml" />
+  </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 
 using BeFit.Models;
+
 using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels
@@ -16,9 +17,9 @@ namespace BeFit.ViewModels
             => owner.NavigateBackward();
 
         [RelayCommand]
-        private void Save()
+        private void Add()
         {
-
+            owner.Navigate(new GoalEditorPageViewModel(owner, this));
         }
     }
 }

@@ -30,8 +30,16 @@
       <v:GoalsEditorPageView/>
     </DataTemplate>
 
+    <DataTemplate DataType="vm:GoalEditorPageViewModel">
+      <v:GoalEditorPageView/>
+    </DataTemplate>
+
     <DataTemplate DataType="vm:TrendsViewModel">
       <v:TrendsPageView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="vm:ScheduleViewModel">
+      <v:ScheduleView/>
     </DataTemplate>
   </UserControl.DataTemplates>
 

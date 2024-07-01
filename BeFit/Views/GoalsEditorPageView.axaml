@@ -17,8 +17,8 @@
               Command="{Binding BackCommand}"/>
 
       <Button Grid.Column="1"
-              Content="Save"
-              Command="{Binding SaveCommand}"/>
+          Content="Add"
+          Command="{Binding AddCommand}"/>
     </Grid>
 
     <ScrollViewer>
@@ -36,23 +36,8 @@
                       HorizontalAlignment="Stretch">
               <StackPanel>
                 <TextBox Text="{Binding Description}"/>
-
-                <ItemsControl ItemsSource="{Binding Schedule}"
-                              HorizontalAlignment="Center">
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="vm:DayOfWeekViewModel">
-                      <CheckBox IsChecked="{Binding Active}"
-                                Content="{Binding Caption}"
-                                ToolTip.Tip="{Binding DayOfWeek}"/>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                
+                <ContentControl Content="{Binding Schedule}"/>
               </StackPanel>
             </Expander>
           </DataTemplate>
