@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+
+using BeFit.Models;
+
 using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels;
 
-public partial class OneDayGoalsViewModel(INavigator navigator) : ViewModelBase
+public partial class OneDayGoalsViewModel : ViewModelBase
 {
-    private readonly INavigator navigator = navigator;
+    private readonly INavigator navigator;
 
-    public ObservableCollection<DoneActionViewModel> Goals { get; } = [];
+    public ObservableCollection<DoneActionViewModel> Goals { get; }
 
     public DateTime Day { get; private set; }
 
@@ -18,13 +22,12 @@ public partial class OneDayGoalsViewModel(INavigator navigator) : ViewModelBase
 
     public double Progress => Goals.Count(g => g.Done) / (double)Goals.Count * 100d;
 
-    public void Load()
+    public OneDayGoalsViewModel(INavigator navigator, DateTime day, IEnumerable<DoneActionViewModel> actual)
     {
-        Day = Goals
-            .Where(g => g.When.HasValue)
-            .Min(g => g.When!.Value)
-            .Date;
+        this.navigator = navigator;
 
+        Goals = new(actual);
+        Day = day;
         DayName = GetDayName(Day);
     }
 

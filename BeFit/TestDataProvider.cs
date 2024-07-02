@@ -16,57 +16,59 @@ internal static class TestDataProvider
         "Читать книгу",
         "Выключить компьютер до 22:00"];
 
-    public static IEnumerable<DayOfWeek> GetDays()
-        => Enumerable
-            .Range(0, Random.Shared.Next(7))
-            .Select(x => (DayOfWeek)Random.Shared.Next(7))
-            .Distinct();
+    //public static IEnumerable<DayOfWeek> GetDays()
+    //    => Enumerable
+    //        .Range(0, Random.Shared.Next(7))
+    //        .Select(x => (DayOfWeek)Random.Shared.Next(7))
+    //        .Distinct();
 
-    public static IEnumerable<DoneActionViewModel> GetGoals(DateTime date) => goalNames
-        .Select((g, i) => new DoneActionViewModel(new Goal(i, g, new Schedule(i, GetDays())))
-    {
-        Done = Random.Shared.Next(1000) < 500,
-        When = date
-    })
-        .Where(a => a.Schedule.Days.Contains(a.When!.Value.DayOfWeek));
+    //public static IEnumerable<DoneActionViewModel> GetGoals(DateTime date) => goalNames
+    //    .Select((g, i) => new DoneActionViewModel(new Goal(i, g, new Schedule(i, GetDays())))
+    //{
+    //    Done = Random.Shared.Next(1000) < 500,
+    //    When = date
+    //})
+    //    .Where(a => a.Schedule.Days.Contains(a.When!.Value.DayOfWeek));
 
-    public static OneDayGoalsViewModel? CreateDayGoals(INavigator navigator, DateTime date)
-    {
-        var result = new OneDayGoalsViewModel(navigator);
+    //public static OneDayGoalsViewModel? CreateDayGoals(INavigator navigator, IGoalsStorage goals, DateTime date)
+    //{
+    //    IEnumerable<GoalState> actual = goals.GetGoalsStateOn(date);
+    //    var result = new OneDayGoalsViewModel(navigator, actual);
 
-        foreach (var goal in GetGoals(date))
-        {
-            result.Goals.Add(goal);
-        }
+    //    foreach (var goal in GetGoals(date))
+    //    {
+    //        result.Goals.Add(goal);
+    //    }
 
-        if (result.Goals.Count == 0)
-        {
-            return null;
-        }
+    //    if (result.Goals.Count == 0)
+    //    {
+    //        return null;
+    //    }
 
-        result.Load();
+    //    return result;
+    //}
 
-        return result;
-    }
+    //public static GoalsHistoryPageViewModel CreateHistory(
+    //    INavigator navigator,
+    //    IGoalsStorage goals,
+    //    DateTime downToDay)
+    //{
+    //    var targetDay = downToDay.Date;
+    //    var currentDay = DateTime.Now.Date;
 
-    public static GoalsHistoryPageViewModel CreateHistory(INavigator navigator, DateTime downToDay)
-    {
-        var targetDay = downToDay.Date;
-        var currentDay = DateTime.Now.Date;
+    //    List<OneDayGoalsViewModel> days = [];
 
-        List<OneDayGoalsViewModel> days = [];
+    //    while ((currentDay - targetDay).TotalDays >= 0)
+    //    {
+    //        var day = CreateDayGoals(navigator, goals, currentDay);
+    //        if (day is not null)
+    //        {
+    //            days.Add(day);
+    //        }
 
-        while ((currentDay - targetDay).TotalDays >= 0)
-        {
-            var day = CreateDayGoals(navigator, currentDay);
-            if (day is not null)
-            {
-                days.Add(day);
-            }
+    //        currentDay = currentDay.AddDays(-1);
+    //    }
 
-            currentDay = currentDay.AddDays(-1);
-        }
-
-        return new(navigator, days);
-    }
+    //    return new(navigator, goals);
+    //}
 }

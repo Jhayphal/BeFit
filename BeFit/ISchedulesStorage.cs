@@ -1,6 +1,6 @@
 ﻿namespace BeFit
 {
-    internal interface ISchedulesStorage
+    public interface ISchedulesStorage
     {
     }
 }

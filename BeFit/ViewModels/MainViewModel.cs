@@ -24,9 +24,9 @@ public partial class MainViewModel : ViewModelBase, INavigator
 
     public MenuPageViewModel MenuPage { get; }
 
-    public MainViewModel()
+    public MainViewModel(IGoalsStorage goals)
     {
-        MenuPage = new(this);
+        MenuPage = new(this, goals);
 
         Navigate(MenuPage);
     }

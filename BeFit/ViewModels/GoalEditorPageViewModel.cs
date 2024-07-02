@@ -4,13 +4,11 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels
 {
-    public partial class GoalEditorPageViewModel(INavigator navigator, GoalsEditorPageViewModel goals) : ViewModelBase
+    public partial class GoalEditorPageViewModel(
+        INavigator navigator,
+        GoalsEditorPageViewModel goals) : ViewModelBase
     {
-        public GoalViewModel Goal { get; } = new GoalViewModel(
-            new Goal(
-                0,
-                string.Empty,
-                Schedule.CreateNew()));
+        public GoalViewModel Goal { get; } = new(new Goal(0, string.Empty, Schedule.CreateNew()));
 
         [RelayCommand]
         private void Cancel()

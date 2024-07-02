@@ -7,9 +7,11 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels
 {
-    public partial class GoalsEditorPageViewModel(INavigator navigator, IEnumerable<Goal> goals) : ViewModelBase
+    public partial class GoalsEditorPageViewModel(
+        INavigator navigator,
+        IEnumerable<GoalViewModel> goals) : ViewModelBase
     {
-        public ObservableCollection<GoalViewModel> Goals { get; } = new(goals.Select(g => new GoalViewModel(g)));
+        public ObservableCollection<GoalViewModel> Goals { get; } = new(goals);
 
         [RelayCommand]
         private void Back()

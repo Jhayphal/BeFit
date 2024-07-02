@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BeFit.Models;
 
@@ -6,39 +7,39 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels;
 
-public partial class MenuPageViewModel(INavigator navigator) : ViewModelBase
+public partial class MenuPageViewModel(
+    INavigator navigator,
+    IGoalsStorage goals) : ViewModelBase
 {
     private readonly INavigator navigator = navigator;
-    private readonly GoalsHistoryPageViewModel history = TestDataProvider.CreateHistory(
-        navigator,
-        new DateTime(2024, 06, 01));
 
     [RelayCommand]
     private void ViewHistory()
     {
-        navigator.Navigate(history);
+        var now = DateTime.Now;
+        var history = goals.GetHistory(new DateTime(), now)
+            .Select(day => new OneDayGoalsViewModel(
+                navigator,
+                now,
+                day.Select(s => new DoneActionViewModel(s.Goal)
+                {
+                    Done = s.Done
+                })));
+
+        navigator.Navigate(new GoalsHistoryPageViewModel(navigator, history));
     }
 
     [RelayCommand]
     private void UpdateTodayAchievements()
     {
-        OneDayGoalsViewModel? target;
-        
-        var today = DateTime.Now.Date;
-        var latestDay = history.Days
-            .OrderByDescending(d => d.Day)
-            .FirstOrDefault();
-        
-        if (latestDay is null || latestDay.Day.Date != today)
-        {
-            target = TestDataProvider.CreateDayGoals(navigator, today);
-            target ??= new OneDayGoalsViewModel(navigator);
-            history.Days.Add(target);
-        }
-        else
-        {
-            target = latestDay;
-        }
+        var now = DateTime.Now;
+        var todayGoalsState = goals.GetGoalsStateOn(now)
+            .Select(s => new DoneActionViewModel(s.Goal)
+            {
+                Done = s.Done
+            });
+
+        OneDayGoalsViewModel target = new(navigator, now, todayGoalsState);
 
         navigator.Navigate(new GoalsPageViewModel(navigator)
         {
@@ -49,16 +50,26 @@ public partial class MenuPageViewModel(INavigator navigator) : ViewModelBase
     [RelayCommand]
     private void EditGoals()
     {
-        var goals = history.Days
-            .SelectMany(x => x.Goals)
-            .Select((g, i) => new Goal(i, g.Description, g.Schedule))
-            .GroupBy(x => x.Description)
-            .Select(x => x.First());
+        IEnumerable<GoalViewModel> availableGoals = goals.GetGoals()
+            .Select(g => new GoalViewModel(g));
 
-        navigator.Navigate(new GoalsEditorPageViewModel(navigator, goals));
+        navigator.Navigate(new GoalsEditorPageViewModel(navigator, availableGoals));
     }
 
     [RelayCommand]
     private void ViewTrends()
-        => navigator.Navigate(new TrendsViewModel(navigator, history.Days));
+    {
+        var now = DateTime.Now;
+        var history = goals.GetHistory(new DateTime(), DateTime.Now)
+            .Select(day => new OneDayGoalsViewModel(
+                navigator,
+                now,
+                day.Select(s => new DoneActionViewModel(s.Goal)
+                {
+                    Done = s.Done
+                })))
+            .ToArray();
+
+        navigator.Navigate(new TrendsViewModel(navigator, history));
+    }
 }

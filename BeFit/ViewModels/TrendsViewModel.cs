@@ -19,7 +19,12 @@ namespace BeFit.ViewModels
             {
                 Values = days,
                 Mapping = (sample, index) => new(sample.Day.ToOADate(), sample.Progress),
-                Fill = new SolidColorPaint(new SKColor(SKColors.DeepSkyBlue.Red, SKColors.DeepSkyBlue.Green, SKColors.DeepSkyBlue.Blue, 32)),
+                Fill = new SolidColorPaint(
+                    new SKColor(
+                        SKColors.DeepSkyBlue.Red,
+                        SKColors.DeepSkyBlue.Green,
+                        SKColors.DeepSkyBlue.Blue,
+                        32)),
                 XToolTipLabelFormatter = (p) => p.Model!.Day.ToString("dd MMM"),
                 YToolTipLabelFormatter = (p) => $"{p.Model!.Progress:00.0}%",
             }
