@@ -16,15 +16,7 @@ public partial class MenuPageViewModel(
     [RelayCommand]
     private void ViewHistory()
     {
-        var now = DateTime.Now;
-        var history = goals.GetHistory(new DateTime(), now)
-            .Select(day => new OneDayGoalsViewModel(
-                navigator,
-                now,
-                day.Select(s => new DoneActionViewModel(s.Goal)
-                {
-                    Done = s.Done
-                })));
+        var history = GetHistory();
 
         navigator.Navigate(new GoalsHistoryPageViewModel(navigator, history));
     }
@@ -59,17 +51,19 @@ public partial class MenuPageViewModel(
     [RelayCommand]
     private void ViewTrends()
     {
-        var now = DateTime.Now;
-        var history = goals.GetHistory(new DateTime(), DateTime.Now)
+        var history = GetHistory();
+
+        navigator.Navigate(new TrendsViewModel(navigator, history));
+    }
+
+    private IEnumerable<OneDayGoalsViewModel> GetHistory()
+        => goals.GetHistory(new DateTime(), DateTime.Now)
             .Select(day => new OneDayGoalsViewModel(
                 navigator,
-                now,
+                day.Min(x => x.Created),
                 day.Select(s => new DoneActionViewModel(s.Goal)
                 {
                     Done = s.Done
                 })))
             .ToArray();
-
-        navigator.Navigate(new TrendsViewModel(navigator, history));
-    }
 }

@@ -8,7 +8,7 @@ namespace BeFit;
 
 internal static class TestDataProvider
 {
-    private static readonly string[] goalNames = [
+    public static readonly string[] GoalNames = [
         "Приготовить еду",
         "Учить английский",
         "Не есть сладкое",
@@ -16,11 +16,26 @@ internal static class TestDataProvider
         "Читать книгу",
         "Выключить компьютер до 22:00"];
 
-    //public static IEnumerable<DayOfWeek> GetDays()
-    //    => Enumerable
-    //        .Range(0, Random.Shared.Next(7))
-    //        .Select(x => (DayOfWeek)Random.Shared.Next(7))
-    //        .Distinct();
+    public static readonly IEnumerable<DayOfWeek> AllDays = Enumerable
+        .Range(0, 7)
+        .Select(x => (DayOfWeek)x)
+        .ToArray();
+
+    public static IEnumerable<DayOfWeek> GetDays()
+    {
+        var result = Enumerable
+            .Range(0, Random.Shared.Next(7))
+            .Select(x => (DayOfWeek)Random.Shared.Next(7))
+            .Distinct()
+            .ToList();
+
+        if (result.Count == 0)
+        {
+            return AllDays;
+        }
+
+        return result;
+    }
 
     //public static IEnumerable<DoneActionViewModel> GetGoals(DateTime date) => goalNames
     //    .Select((g, i) => new DoneActionViewModel(new Goal(i, g, new Schedule(i, GetDays())))
