@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using BeFit.Models;
 using BeFit.ViewModels;
 
@@ -31,9 +30,9 @@ internal static class TestDataProvider
     })
         .Where(a => a.Schedule.Days.Contains(a.When!.Value.DayOfWeek));
 
-    public static OneDayGoalsViewModel? CreateDayGoals(MainViewModel owner, DateTime date)
+    public static OneDayGoalsViewModel? CreateDayGoals(INavigator navigator, DateTime date)
     {
-        var result = new OneDayGoalsViewModel(owner);
+        var result = new OneDayGoalsViewModel(navigator);
 
         foreach (var goal in GetGoals(date))
         {
@@ -50,7 +49,7 @@ internal static class TestDataProvider
         return result;
     }
 
-    public static GoalsHistoryPageViewModel CreateHistory(MainViewModel owner, DateTime downToDay)
+    public static GoalsHistoryPageViewModel CreateHistory(INavigator navigator, DateTime downToDay)
     {
         var targetDay = downToDay.Date;
         var currentDay = DateTime.Now.Date;
@@ -59,7 +58,7 @@ internal static class TestDataProvider
 
         while ((currentDay - targetDay).TotalDays >= 0)
         {
-            var day = CreateDayGoals(owner, currentDay);
+            var day = CreateDayGoals(navigator, currentDay);
             if (day is not null)
             {
                 days.Add(day);
@@ -68,6 +67,6 @@ internal static class TestDataProvider
             currentDay = currentDay.AddDays(-1);
         }
 
-        return new(owner, days);
+        return new(navigator, days);
     }
 }

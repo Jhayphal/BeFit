@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Linq;
-
 using BeFit.Models;
 
 using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels;
 
-public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
+public partial class MenuPageViewModel(INavigator navigator) : ViewModelBase
 {
-    private readonly MainViewModel owner = owner;
+    private readonly INavigator navigator = navigator;
     private readonly GoalsHistoryPageViewModel history = TestDataProvider.CreateHistory(
-        owner,
+        navigator,
         new DateTime(2024, 06, 01));
 
     [RelayCommand]
     private void ViewHistory()
     {
-        owner.Navigate(history);
+        navigator.Navigate(history);
     }
 
     [RelayCommand]
@@ -32,8 +31,8 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
         
         if (latestDay is null || latestDay.Day.Date != today)
         {
-            target = TestDataProvider.CreateDayGoals(owner, today);
-            target ??= new OneDayGoalsViewModel(owner);
+            target = TestDataProvider.CreateDayGoals(navigator, today);
+            target ??= new OneDayGoalsViewModel(navigator);
             history.Days.Add(target);
         }
         else
@@ -41,7 +40,7 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
             target = latestDay;
         }
 
-        owner.Navigate(new GoalsPageViewModel(owner)
+        navigator.Navigate(new GoalsPageViewModel(navigator)
         {
             Today = target
         });
@@ -56,10 +55,10 @@ public partial class MenuPageViewModel(MainViewModel owner) : ViewModelBase
             .GroupBy(x => x.Description)
             .Select(x => x.First());
 
-        owner.Navigate(new GoalsEditorPageViewModel(owner, goals));
+        navigator.Navigate(new GoalsEditorPageViewModel(navigator, goals));
     }
 
     [RelayCommand]
     private void ViewTrends()
-        => owner.Navigate(new TrendsViewModel(owner, history.Days));
+        => navigator.Navigate(new TrendsViewModel(navigator, history.Days));
 }

@@ -11,7 +11,7 @@ using SkiaSharp;
 
 namespace BeFit.ViewModels
 {
-    public partial class TrendsViewModel(MainViewModel owner, IEnumerable<OneDayGoalsViewModel> days) : ViewModelBase
+    public partial class TrendsViewModel(INavigator navigator, IEnumerable<OneDayGoalsViewModel> days) : ViewModelBase
     {
         public ISeries[] Series { get; } =
         [
@@ -47,6 +47,6 @@ namespace BeFit.ViewModels
 
         [RelayCommand]
         private void Back()
-            => owner.NavigateBackward();
+            => navigator.NavigateBackward();
     }
 }

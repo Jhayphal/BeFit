@@ -2,7 +2,7 @@
 
 namespace BeFit.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase, INavigator
 {
     private readonly Stack<ViewModelBase> pagesNavigationHistory = [];
 

@@ -2,14 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-
 using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels;
 
-public partial class OneDayGoalsViewModel(MainViewModel owner) : ViewModelBase
+public partial class OneDayGoalsViewModel(INavigator navigator) : ViewModelBase
 {
-    private readonly MainViewModel owner = owner;
+    private readonly INavigator navigator = navigator;
 
     public ObservableCollection<DoneActionViewModel> Goals { get; } = [];
 
@@ -38,5 +37,5 @@ public partial class OneDayGoalsViewModel(MainViewModel owner) : ViewModelBase
 
     [RelayCommand]
     private void Show()
-        => owner.Navigate(new GoalsPageViewModel(owner) { Today = this });
+        => navigator.Navigate(new GoalsPageViewModel(navigator) { Today = this });
 }

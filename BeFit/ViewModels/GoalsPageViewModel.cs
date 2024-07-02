@@ -2,15 +2,15 @@
 
 namespace BeFit.ViewModels;
 
-public partial class GoalsPageViewModel(MainViewModel owner) : ViewModelBase
+public partial class GoalsPageViewModel(INavigator navigator) : ViewModelBase
 {
-    private readonly MainViewModel owner = owner;
+    private readonly INavigator navigator = navigator;
 
     public required OneDayGoalsViewModel Today { get; set; }
 
     [RelayCommand]
     private void Back()
-        => owner.NavigateBackward();
+        => navigator.NavigateBackward();
 
     [RelayCommand]
     private void Done()

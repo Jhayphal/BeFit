@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeFit.ViewModels
 {
-    public partial class GoalEditorPageViewModel(MainViewModel owner, GoalsEditorPageViewModel goals) : ViewModelBase
+    public partial class GoalEditorPageViewModel(INavigator navigator, GoalsEditorPageViewModel goals) : ViewModelBase
     {
         public GoalViewModel Goal { get; } = new GoalViewModel(
             new Goal(
@@ -14,14 +14,14 @@ namespace BeFit.ViewModels
 
         [RelayCommand]
         private void Cancel()
-            => owner.NavigateBackward();
+            => navigator.NavigateBackward();
 
         [RelayCommand]
         private void Add()
         {
             goals.Goals.Add(Goal);
 
-            owner.NavigateBackward();
+            navigator.NavigateBackward();
         }
     }
 }
