@@ -9,7 +9,7 @@ namespace BeFit.ViewModels;
 
 public partial class MenuPageViewModel(
     INavigator navigator,
-    IGoalsStorage goals) : ViewModelBase
+    TestGoalsStorage storage) : ViewModelBase
 {
     private readonly INavigator navigator = navigator;
 
@@ -25,7 +25,7 @@ public partial class MenuPageViewModel(
     private void UpdateTodayAchievements()
     {
         var now = DateTime.Now;
-        var todayGoalsState = goals.GetGoalsStateOn(now)
+        var todayGoalsState = storage.GetGoalsStateOn(now)
             .Select(s => new DoneActionViewModel(s.Goal)
             {
                 Done = s.Done
@@ -42,10 +42,10 @@ public partial class MenuPageViewModel(
     [RelayCommand]
     private void EditGoals()
     {
-        IEnumerable<GoalViewModel> availableGoals = goals.GetGoals()
+        IEnumerable<GoalViewModel> availableGoals = storage.GetGoals()
             .Select(g => new GoalViewModel(g));
 
-        navigator.Navigate(new GoalsEditorPageViewModel(navigator, availableGoals));
+        navigator.Navigate(new GoalsEditorPageViewModel(navigator, availableGoals, storage));
     }
 
     [RelayCommand]
@@ -57,7 +57,7 @@ public partial class MenuPageViewModel(
     }
 
     private IEnumerable<OneDayGoalsViewModel> GetHistory()
-        => goals.GetHistory(new DateTime(), DateTime.Now)
+        => storage.GetHistory(new DateTime(), DateTime.Now)
             .Select(day => new OneDayGoalsViewModel(
                 navigator,
                 day.Min(x => x.Created),

@@ -14,5 +14,7 @@ public partial class GoalsPageViewModel(INavigator navigator) : ViewModelBase
 
     [RelayCommand]
     private void Done()
-        => Back();
+    {
+        Back();
+    }
 }

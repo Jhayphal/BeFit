@@ -9,7 +9,8 @@ namespace BeFit.ViewModels
 {
     public partial class GoalsEditorPageViewModel(
         INavigator navigator,
-        IEnumerable<GoalViewModel> goals) : ViewModelBase
+        IEnumerable<GoalViewModel> goals,
+        TestGoalsStorage storage) : ViewModelBase
     {
         public ObservableCollection<GoalViewModel> Goals { get; } = new(goals);
 
@@ -19,8 +20,6 @@ namespace BeFit.ViewModels
 
         [RelayCommand]
         private void Add()
-        {
-            navigator.Navigate(new GoalEditorPageViewModel(navigator, this));
-        }
+            => navigator.Navigate(new GoalEditorPageViewModel(navigator, this, storage));
     }
 }

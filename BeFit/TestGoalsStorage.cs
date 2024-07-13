@@ -6,7 +6,7 @@ using BeFit.Models;
 
 namespace BeFit
 {
-    public sealed class TestGoalsStorage : IGoalsStorage
+    public sealed class TestGoalsStorage
     {
         private readonly List<Goal> goals;
         private readonly List<GoalState> goalsState;
@@ -14,7 +14,7 @@ namespace BeFit
         public TestGoalsStorage()
         {
             goals = TestDataProvider.GoalNames
-                .Select((g, i) => new Goal(i, g, new Schedule(i, TestDataProvider.GetDays())))
+                .Select((g, i) => new Goal(i + 1, g, new Schedule(i + 1, TestDataProvider.GetDays())))
                 .ToList();
 
             goalsState = [];
@@ -47,5 +47,49 @@ namespace BeFit
                 .OrderByDescending(s => s.Created)
                 .Where(s => from.Date <= s.Created.Date && to.Date >= s.Created.Date)
                 .GroupBy(x => x.Created.Date);
+
+        public void UpdateGoalState(GoalState state)
+        {
+            var targetIndex = goalsState.FindIndex(s => s.Goal.Id == state.Goal.Id);
+            if (targetIndex < 0)
+            {
+                throw new ArgumentException("Unknown state", nameof(state));
+            }
+
+            goalsState[targetIndex] = state;
+        }
+
+        public void AddState(GoalState state)
+        {
+            if (state.Goal.Id != 0)
+            {
+                throw new ArgumentException("State already exists", nameof(state));
+            }
+
+            var lastScheduleId = goalsState.Count == 0
+                ? 0
+                : goalsState.Max(g => g.Goal.Schedule.Id);
+
+            var newSchedule = state.Goal.Schedule with
+            {
+                Id = lastScheduleId + 1
+            };
+
+            var lastGoalId = goalsState.Count == 0
+                ? 0
+                : goalsState.Max(g => g.Goal.Id);
+
+            var newGoal = state.Goal with
+            {
+                Id = lastGoalId + 1
+            };
+
+            GoalState newState = state with
+            {
+                Goal = newGoal
+            };
+
+            goalsState.Add(state);
+        }
     }
 }
